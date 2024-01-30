@@ -1,0 +1,32 @@
+/* Start Menu Styles */
+
+.start-menu {
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+    width: 200px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+}
+
+.start-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.start-menu li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.start-menu li:hover {
+    background-color: #ddd;
+}
+
+.start-menu li:last-child {
+    border-bottom: none;
+}

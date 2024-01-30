@@ -1,0 +1,23 @@
+/* Tray styles */
+.tray {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 200px;
+  height: 30px;
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.tray .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.tray .time {
+  font-size: 14px;
+}

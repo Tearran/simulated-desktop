@@ -1,0 +1,20 @@
+/* Resetting default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Main container for the simulated desktop */
+.container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+/* Styles for the taskbar, start menu, tray, and window will be imported from their respective CSS files */
