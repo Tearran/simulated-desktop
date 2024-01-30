@@ -18,15 +18,46 @@ Simulated Desktop is designed with certain constraints to ensure optimal perform
 Please note that these limitations are by design and are not planned to be addressed in future versions of Simulated Desktop.
 
 ## Getting Started
+## Quick Start Guide
 
-To start with Simulated Desktop, open the `index.html` file in your web browser. You'll be presented with a familiar desktop environment, complete with a taskbar, start menu, and system tray.
+Follow these steps to quickly get started with Simulated Desktop:
+
+- For Linux users with a GUI, switch to a TTY login by pressing `Ctrl + Alt + F[number]` (replace `[number]` with a number from 1 to 6), log in, and then proceed with the following steps:
+
+1. Clone the repository:
+
+  ```
+  git clone https://github.com/Tearran/simulated-desktop.git
+  ```
+
+2. Navigate to the cloned directory:
+
+  ```
+  cd simulated-desktop
+  ```
+
+3. Run the server:
+
+  ```
+  bash ./server.sh
+  ```
+
+- For Windows users, open Command Prompt and follow the same steps 1-3, but use the following command to run the server:
+
+  ```
+  server.bat
+  ```
+
+Please note that Python is required to run the server.
+
+After starting the server, open your HTML5-compatible browser and navigate to `http://127.0.0.1:8000` to start using Simulated Desktop. Enjoy!
 
 ## Navigating the Desktop
 
 The desktop includes several features to help you navigate:
 
-- **Taskbar**: Located at the top of the screen, the taskbar allows you to access the apps or links in start menu.
-- **Start Menu**: Click the start button in the taskbar to open the start menu. From here, you can access future features of the simulated desktop.
+- **Taskbar**: Located at the bottom of the screen, the taskbar allows you to manage your open windows and access the start menu.
+- **Start Menu**: Click the start button in the taskbar to open the start menu. From here, you can access all the features of the simulated desktop.
 - **System Tray**: Located at the top of the screen, the system tray provides notifications and system status information.
 - **Window Decorations**: Each window includes a title bar with close and full screen buttons. Click the close button to close the window, or the full screen button to maximize the window.
 
