@@ -1,0 +1,188 @@
+<html lang="en">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<title>Simtop</title>
+	<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-image: url('https://via.placeholder.com/1920x1080'); /* Replace with the path to your image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-position: center; /* Center the background image */
+    color: #8b8b8b; /* Light text color */
+}
+		#taskbar {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row;
+			background-color: #333;
+            padding: 10px;
+			/* Dark background for the whole page */
+			color: #fff;
+			/* Light text color */
+		}
+
+		.taskbar-section {
+			display: flex;
+			align-items: center;
+			padding: 0 10px;
+			/* Add some padding around each section */
+		}
+
+		#start-button-section,
+		#app-buttons-section {
+			justify-content: flex-start;
+		}
+
+		#reserve-section {
+			justify-content: flex-start;
+			flex-grow: 1;
+
+			/* This will make the reserve section take up the remaining space */
+		}
+
+		#icon-section,
+		#time-section,
+		#right-icon-section {
+			justify-content: flex-end;
+		}
+
+		#desktop {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(calc(5em + 10px), 1fr));
+			grid-gap: 10px;
+			padding: 10px;
+			position: absolute;
+			top: 50px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 0;
+			align-content: start;
+			/* Added */
+		}
+
+		.desktop-item i:hover {
+			color: #ff0;
+			/* Change to the color you want for the hover state */
+		}
+
+		.desktop-item i:visited {
+			color: #f0f;
+			/* Change to the color you want for the visited state */
+		}
+
+		.desktop-item {
+			display: flex;
+			/* Added */
+			justify-content: center;
+			/* Added */
+			align-items: center;
+			/* Added */
+			flex-direction: column;
+			/* Added */
+		}
+
+		.start-menu-overlay {
+			display: none;
+			position: fixed;
+			width: 40%;
+			height: calc(100% - 50px);
+			top: 50px;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 1000;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.start-menu-overlay .row a {
+			margin: 0 10px;
+            padding: 5px;
+			/* Add some margin around each link */
+			color: #fff;
+			/* Light text color */
+		}
+
+		.start-menu-overlay .row i {
+			color: #fff;
+			/* Set the color of the icons to white */
+		}
+
+		.clock-overlay {
+			/* Add your styles for the clock overlay here */
+			display: none;
+			position: fixed;
+			width: 40%;
+			height: calc(100% - 50px);
+			top: 50px;
+			left: 30%;
+            padding: 10px;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 1000;
+		}
+	</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+
+	<div id="taskbar">
+		<div class="taskbar-section" id="start-button-section">
+			<i class="fas fa-microchip fa-2x"></i> Start
+		</div>
+		<div class="taskbar-section" id="app-buttons-section">
+			<i class="fas fa-microchip fa-2x"></i> <!-- Replace with your top row icon -->
+		</div>
+		<div class="taskbar-section" id="reserve-section">
+        
+        </div>
+		<div class="taskbar-section" id="icon-section">
+			<i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+		</div>
+		<div class="taskbar-section" id="time-section">
+			Time
+		</div>
+		<div class="taskbar-section" id="right-icon-section">
+			<i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
+		</div>
+	</div>
+
+	<div id="start-menu-overlay" class="start-menu-overlay">
+		<div class="row">
+			<i class="fas fa-microchip fa-2x"></i> <!-- Replace with your top row icon -->
+		</div>
+		<div class="row" id="middle-row">
+			<!-- The middle row will be filled out by JavaScript -->
+		</div>
+		<div class="row">
+			<i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
+            <i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
+            <i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
+            <i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
+		</div>
+	</div>
+
+	<div id="desktop">
+		<!-- Add more items as needed -->
+	</div>
+    <script>
+    
+    </script>
+	<script src="./js/main.js"></script>
+    <script src="./js/tray.js"></script>
+    <script src="./js/taskbar.js"></script>
+	<script src="./js/startmenu.js"></script>
+</body>
+
+</html>

@@ -1,188 +1,354 @@
-<html lang="en">
-
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta charset="utf-8">
-	<title>Simtop</title>
-	<style>
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    background-image: url('https://via.placeholder.com/1920x1080'); /* Replace with the path to your image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-    background-position: center; /* Center the background image */
-    color: #8b8b8b; /* Light text color */
-}
-		#taskbar {
-			display: flex;
-			justify-content: space-between;
-			flex-direction: row;
-			background-color: #333;
-            padding: 10px;
-			/* Dark background for the whole page */
-			color: #fff;
-			/* Light text color */
-		}
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-		.taskbar-section {
-			display: flex;
-			align-items: center;
-			padding: 0 10px;
-			/* Add some padding around each section */
-		}
+<style>
 
-		#start-button-section,
-		#app-buttons-section {
-			justify-content: flex-start;
-		}
+    :root {
+        --background-color: white;
+        --text-color: black;
+        --link-color: blue;
+        --modal-background-color: #747474;
+        --taskbar-background-color: #747474;
+        --button-background-color: #d7d7d7;
+        --button-hover-background-color: #555;
+        --search-form-background-color: #555;
+        --search-form-hover-background-color: #777;
+    }
 
-		#reserve-section {
-			justify-content: flex-start;
-			flex-grow: 1;
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
 
-			/* This will make the reserve section take up the remaining space */
-		}
+    .wrapper li a {
+        color: var(--link-color);
+    }
 
-		#icon-section,
-		#time-section,
-		#right-icon-section {
-			justify-content: flex-end;
-		}
+    .modal.on {
+        background-color: var(--modal-background-color);
+    }
 
-		#desktop {
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(calc(5em + 10px), 1fr));
-			grid-gap: 10px;
-			padding: 10px;
-			position: absolute;
-			top: 50px;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 0;
-			align-content: start;
-			/* Added */
-		}
+    #taskbar {
+        background-color: var(--taskbar-background-color);
+    }
 
-		.desktop-item i:hover {
-			color: #ff0;
-			/* Change to the color you want for the hover state */
-		}
+    #startmenu {
+        background-color: var(--button-background-color);
+    }
 
-		.desktop-item i:visited {
-			color: #f0f;
-			/* Change to the color you want for the visited state */
-		}
+    #startmenu:hover {
+        background-color: var(--button-hover-background-color);
+    }
 
-		.desktop-item {
-			display: flex;
-			/* Added */
-			justify-content: center;
-			/* Added */
-			align-items: center;
-			/* Added */
-			flex-direction: column;
-			/* Added */
-		}
+    #box {
+        background-color: var(--modal-background-color);
+    }
 
-		.start-menu-overlay {
-			display: none;
-			position: fixed;
-			width: 40%;
-			height: calc(100% - 50px);
-			top: 50px;
-			left: 0;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 1000;
-			display: flex;
-			flex-direction: column;
-		}
+    #search-input {
+        background-color: var(--search-form-background-color);
+    }
 
-		.start-menu-overlay .row a {
-			margin: 0 10px;
-            padding: 5px;
-			/* Add some margin around each link */
-			color: #fff;
-			/* Light text color */
-		}
+    #search-form button {
+        background-color: var(--search-form-background-color);
+    }
 
-		.start-menu-overlay .row i {
-			color: #fff;
-			/* Set the color of the icons to white */
-		}
+    #search-form button:hover {
+        background-color: var(--search-form-hover-background-color);
+    }
 
-		.clock-overlay {
-			/* Add your styles for the clock overlay here */
-			display: none;
-			position: fixed;
-			width: 40%;
-			height: calc(100% - 50px);
-			top: 50px;
-			left: 30%;
-            padding: 10px;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 1000;
-		}
-	</style>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
+    .dark-mode {
+        --background-color: black;
+        --text-color: white;
+        --link-color: lightblue;
+        --modal-background-color: #1d2021;
+        --taskbar-background-color: #1d2021;
+        --button-background-color: #555;
+        --button-hover-background-color: #777;
+        --search-form-background-color: #777;
+        --search-form-hover-background-color: #999;
+    }
 
-<body>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+            .wrapper li {
+            margin-bottom: 10px; /* add some space below each list item */
+            margin-top: 10px; /* add some space below each list item */
+            margin-left: 4%; /* add some space below each list item */
+        }
+    html,
+    body, iframe {
+        border: none;
 
-	<div id="taskbar">
-		<div class="taskbar-section" id="start-button-section">
-			<i class="fas fa-microchip fa-2x"></i> Start
-		</div>
-		<div class="taskbar-section" id="app-buttons-section">
-			<i class="fas fa-microchip fa-2x"></i> <!-- Replace with your top row icon -->
-		</div>
-		<div class="taskbar-section" id="reserve-section">
-        
-        </div>
-		<div class="taskbar-section" id="icon-section">
-			<i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-		</div>
-		<div class="taskbar-section" id="time-section">
-			Time
-		</div>
-		<div class="taskbar-section" id="right-icon-section">
-			<i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-            <i class="fas fa-microchip"></i> <!-- Replace with your top row icon -->
-		</div>
-	</div>
-
-	<div id="start-menu-overlay" class="start-menu-overlay">
-		<div class="row">
-			<i class="fas fa-microchip fa-2x"></i> <!-- Replace with your top row icon -->
-		</div>
-		<div class="row" id="middle-row">
-			<!-- The middle row will be filled out by JavaScript -->
-		</div>
-		<div class="row">
-			<i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
-            <i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
-            <i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
-            <i class="fas fa-microchip fa-2x"></i> <!-- Replace with your bottom row icon -->
-		</div>
-	</div>
-
-	<div id="desktop">
-		<!-- Add more items as needed -->
-	</div>
-    <script>
+    }
+    .close {
+        background-color: transparent;
+    }.close {
+        color: green;
+    }
+    .close:hover {
+        color: red;
+    }
     
-    </script>
-	<script src="./js/main.js"></script>
-    <script src="./js/tray.js"></script>
-    <script src="./js/taskbar.js"></script>
-	<script src="./js/startmenu.js"></script>
-</body>
+    .wrapper {
+        list-style: none; /* remove the default list item markers */
+    }
 
-</html>
+    .wrapper li::before {
+        content: ""; /* remove the default content */
+    }
+
+    .wrapper li a {
+        text-decoration: none; /* remove the underline */
+    }
+
+    .modal:not(.on) {
+        display: none;
+    }
+    
+    .close {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+
+        border: none;
+        padding: 2px 4px;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    .modal.on {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 58px; /* space from the top */
+        left: 0; /* full width */
+        right: 0; /* full width */
+        bottom: 0; /* full height from the top to the bottom */
+        padding: 36px 4px 0px 4px;
+        border-radius: 5px; /* makes the button round */
+
+        z-index: 1;
+    }
+    #taskbar {
+
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 52px; /* adjust as needed */
+        z-index: 2; /* make sure it's above other elements */
+    }
+    
+    .modal.on:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        opacity: 0.5;
+        z-index: -1;
+    }
+    
+.startmenu {
+    border: none;
+    text-align: left;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 100%; 
+    border-radius: 5px; /* makes the button round */
+    padding: 5px; /* size of the button */
+}
+
+
+#box { 
+    margin-top: 62px; /* add some space above the box */
+    display: none; /* initially hide the box */
+    border-radius: 5px; 
+    width: 50%;
+    height: 80%;
+    padding: 5px;
+}
+
+#search-form {
+    display: flex;
+   
+}
+
+#search-input {
+    height: 30px;
+    width: 100%;   
+    border-radius: 5px 0 0 5px; /* top-left, top-right, bottom-right, bottom-left */
+    border: none;
+}
+
+#search-form button {
+    border-radius: 0 5px 5px 0; /* top-left, top-right, bottom-right, bottom-left */
+    border: none;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.column {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.right-columns {
+    display: flex;
+    margin-left: auto;
+}
+#box .menu {
+    width: 90%; 
+    height: 90%;
+    border-radius: 5px; /* makes the button round */
+    padding: 5%; /* size of the button */
+    margin-top: 5px;
+    overflow: auto;
+}
+.icon-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.link-bordered {
+    padding: 10px; /* Adjust as needed */
+    border: 1px solid #000; /* Adjust color as needed */
+}
+.green-link {
+    color: green;
+}
+
+.green-link:hover {
+    color: darkgreen; /* Adjust as needed */
+}
+
+.green-link:visited {
+    color: lightgreen; /* Adjust as needed */
+}
+.padit {
+    padding: 5%;
+}
+
+
+
+    </style>
+    </head>
+    <body class="dark-mode">
+
+
+    <div id="taskbar">
+        <div class="column">
+            <button id="startmenu" class="startmenu"><i class="fa-brands fa-linux fa-2x"></i></button>
+        </div>
+
+        <div class="column">
+            <a href="./apps/tearran.repo.html" class="link-bordered green-link"><i class="fas fa-code-branch "></i></a>
+      </div>
+
+        <div class="right-columns">
+
+            <div class="column" id="system-time">
+                SYStime
+            </div>
+            <div class="column" id="note">
+                <i id="dark-mode-toggle" class="fa-solid fa-toggle-off"></i>
+            </div>
+            <div  class="column" id="full-screen-toggle">
+                <i id="fullscreen-icon" class="fa-solid fa-expand"></i>
+            </div>
+           
+        </div>
+
+    </div>
+   
+    <div id="box" style="display: none;">
+        <div class="padit" >
+            <form id="search-form" >
+                <input type="text" id="search-input" placeholder="Search...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="menu" id="mainmenu">
+            <ol class="wrapper">
+                <li><a href="./apps/psudo.tty.html" class="link"><i class="fa-solid fa-terminal fa-3x"></i>  Terminal</a></li>
+                <li><a href="apps/configng.edit.html" class="link"><i class="fas fa-cog fa-3x"></i> ConfigNG editor</a></li>
+                <li><a href="./docs/index.html" class="link"><i class="fas fa-book  fa-3x"></i> Configng Docs</a></li>
+            </ol>
+        </div>
+
+    </div>
+
+    <div class="modal">
+        
+        <button class="close"><i class="fa-solid fa-rectangle-xmark fa-2x"></i></button>
+        <iframe style="width: 100%; height: 100%"></iframe>
+    
+    </div>
+
+    <script>
+document.getElementById('dark-mode-toggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    this.classList.toggle('fa-toggle-off');
+    this.classList.toggle('fa-toggle-on');
+});
+
+
+        const links = document.querySelectorAll(".link");
+        const modal = document.querySelector(".modal");
+        const close = document.querySelector(".close");
+        const iframe = document.querySelector("iframe");
+
+        links.forEach(link => {
+            link.addEventListener("click", (event) => {
+                event.preventDefault();
+                iframe.src = link.href;
+                modal.classList.add("on");
+            });
+        });
+
+        close.addEventListener("click", () => {
+            modal.classList.remove("on");
+        });
+
+
+        document.getElementById('startmenu').addEventListener('click', function() {
+            var box = document.getElementById('box');
+            if (box.style.display === 'none') {
+                box.style.display = 'block';
+            } else {
+                box.style.display = 'none';
+            }
+        });
+
+// Fullscreen toggle button
+        document.getElementById('fullscreen-icon').addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen(); 
+                }
+            }
+        });
+
+function updateTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString(); // format the time as a string
+    document.getElementById('system-time').textContent = timeString;
+}
+
+// Update the time immediately, then every second
+updateTime();
+setInterval(updateTime, 1000);
+
+    </script>
+    </body>
+    </html>
