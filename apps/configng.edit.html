@@ -70,23 +70,49 @@
         padding: 5px;
         margin-bottom: 5px;
     }
+
+    #main_container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #block_section {
+        flex: 1;
+        order: 1; /* This will make it appear on the left */
+    }
+
+    #json_section {
+        flex: 1;
+        order: 2; /* This will make it appear on the right */
+    }
+
+    @media (max-width: 1024px) {
+        #main_container {
+            flex-direction: column;
+        }
+
+        #block_section, #json_section {
+            order: unset; /* This will make the sections stack vertically in their original order */
+        }
+    }
+
+
         </style>
     </head>
 <body>
 
 
+<div id="main_container">
+    <div id="block_section">
+        <h2>Menu</h2>
+        <div id="sub_output"><!-- display block --></div>
+    </div>
 
-<div id="block_section">
-    <h2>Menu</h2>
-    <div id="sub_output"><!-- display block --></div>
-
-</div>
-
-<div id="json_section">
-    <h2>JSON Output</h2>
-    <button id="copy_button">Copy to Clipboard</button>
-    <pre id="json_output"></pre>
-    
+    <div id="json_section">
+        <h2>JSON Output</h2>
+        <button id="copy_button">Copy to Clipboard</button>
+        <pre id="json_output"></pre>
+    </div>
 </div>
 
 <script>
