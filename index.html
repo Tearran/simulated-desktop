@@ -4,17 +4,26 @@
 
 <style>
 
-    :root {
-        --background-color: white;
-        --text-color: black;
-        --link-color: blue;
-        --modal-background-color: #747474;
-        --taskbar-background-color: #747474;
-        --button-background-color: #d7d7d7;
-        --button-hover-background-color: #555;
-        --search-form-background-color: #555;
-        --search-form-hover-background-color: #777;
-    }
+
+/* Width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg); 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover); 
+}
 
     body {
         background-color: var(--background-color);
@@ -237,20 +246,41 @@
     padding: 5%;
 }
 
+.widget-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.discord-widget {
+    position: absolute;
+    right: 0;
+    top: 64px;
+}
 
 
     </style>
-    </head>
-    <body class="dark-mode">
-
-
+<link rel="stylesheet" type="text/css" href="../css/theme.css">
+</head>
+<body class="dark-mode">
+<div class="widget-container">
+    <!-- Put your iframes here 
+    <p class="discord-widget">
+    <iframe src="./apps/configng.discord.html" 
+        width="250" 
+        height="500" 
+        allowtransparency="true" 
+        frameborder="0" ></iframe>
+    
+    </p>-->
+</div>
     <div id="taskbar">
         <div class="column">
             <button id="startmenu" class="startmenu"><i class="fa-brands fa-linux fa-2x"></i></button>
         </div>
 
         <div class="column">
-            <a href="./apps/tearran.repo.html" class="link link-bordered green-link"><i class="fas fa-code-branch "></i></a>
+            <a href="./apps/psudo.tty.html" class="link green-link"><i class="fas fa-terminal fa-x2"></i></a>
       </div>
 
         <div class="right-columns">
@@ -280,11 +310,9 @@
             <ol class="wrapper">
                 <li><a href="./apps/psudo.tty.html" class="link"><i class="fa-solid fa-terminal fa-3x"></i>  Terminal</a></li>
                 <li><a href="apps/configng.edit.html" class="link"><i class="fas fa-cog fa-3x"></i> ConfigNG editor</a></li>
-                <li><a href="./docs/index.html" class="link"><i class="fas fa-book  fa-3x"></i> Configng Docs</a></li>
-                <li><a href="./apps/tearran.repo.html" class="link"><i class="fas fa-code-branch fa-3x"></i> Tearran Repo</a></li>
-                <li><a href="./apps/lkars.hud.html" class="link link-bordered green-link"><i class="fas fa-tachometer-alt fa-3x"></i> LKARS HUD</a></li>
-                <li><a href="./apps/deskish.html" class="link"><i class="fas fa-desktop fa-3x"></i> Deskish</a></li>
-            </ol>
+                <li><a href="https://armbian.tech/bb/index.php" class="link"><i class="fa-solid fa-comments fa-3x"></i> Bullten Board</a></li>
+                <li><a href="./docs/index.html#armbian-configng.md" class="link"><i class="fas fa-book  fa-3x"></i> Configng Docs</a></li>
+       </ol>
         </div>
 
     </div>
@@ -292,7 +320,9 @@
     <div class="modal">
         
         <button class="close"><i class="fa-solid fa-rectangle-xmark fa-2x"></i></button>
-        <iframe style="width: 100%; height: 100%"></iframe>
+        <div class="iframe-container" style="width: 100%; height: 100%">
+            <iframe id="myIframe" style="width: 100%; height: 100%"></iframe>
+        </div>
     
     </div>
 
@@ -307,8 +337,8 @@ document.getElementById('dark-mode-toggle').addEventListener('click', function()
         const links = document.querySelectorAll(".link");
         const modal = document.querySelector(".modal");
         const close = document.querySelector(".close");
-        const iframe = document.querySelector("iframe");
-
+        //const iframe = document.querySelector("iframe");
+        const iframe = document.querySelector("#myIframe");
         links.forEach(link => {
             link.addEventListener("click", (event) => {
                 event.preventDefault();

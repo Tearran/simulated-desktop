@@ -6,52 +6,72 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Expires" content="0" />
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            display: flex;
-        }
-        #content {
-            padding: 20px;
-            flex-grow: 1;
-            overflow-x: auto;
-        }
-        #links {
-            padding: 20px;
-            border-right: 1px solid #c9d1d9;
-            background-color: #161b22; /* darker background */
-            width: 250px; /* fixed width */
-            overflow-y: auto; /* vertical scrollbar if necessary */
-        }
-        #links a {
-            color: #c9d1d9; /* lighter color */
-            display: block;
-            margin-bottom: 10px;
-            text-decoration: none; /* remove underline */
-            padding: 5px 10px; /* add some padding */
-        }
-        #links a:hover {
-            background-color: #0d1117; /* change background on hover */
-            color: #58a6ff; /* change color on hover */
-        }
-        h1, h2, h3, h4, h5, h6 {
-            color: #c9d1d9;
-        }
-        code {
-            color: #8b949e;
-        }
-    </style>
-</head>
-<body>
-    <div id="links"></div>
-    <div id="content"></div>
+        <link rel="stylesheet" type="text/css" href="../css/theme.css">
+<style>
+            /* Width */
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
 
-    <script defer>
-        function startApp() {
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #232323; 
+            }
+            
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: #888; 
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555; 
+            }
+            body {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                grid-template-areas: 
+                    "nav"
+                    "content";
+            }
+
+            #links {
+                grid-area: nav;
+                padding: 10px;
+                overflow: auto;
+                background-color: #435641b4;
+            }
+
+            #links a {
+                display: block;
+                padding: 10px 0;
+            }
+
+            #content {
+                grid-area: content;
+                padding: 10px;
+            }
+
+            @media (min-width: 600px) {
+                body {
+                    grid-template-columns: 1fr 200px;
+                    grid-template-rows: 1fr;
+                    grid-template-areas: 
+                        "content nav";
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+
+            <div id="links"></div>
+            <div id="content"></div>
+
+        <script defer>
             // List of files in your workspace
-            var files = ["armbian-configng.md", "user_manual_generation.md", "armbianmonitor.md"];
+            var files = ["about.md", "deskishtop.md", "armbian-configng.md", "user_manual_generation.md", "armbianmonitor.md"];
 
             // Function to fetch and display a file
             function displayFile(file) {
@@ -65,54 +85,41 @@
 
             // Function to create a link for a file
             function createLink(file) {
-                var fileDiv = document.createElement('div'); // Create a new div for this file
-
                 var link = document.createElement('a');
-                link.href = '#';
+                link.href = '#' + file; // Add the file name to the # tag
                 link.textContent = file;
                 link.onclick = function() {
                     displayFile(file);
                     return false;
                 };
-                fileDiv.appendChild(link); // Append the main link to the fileDiv
-
-                // Fetch the file to find headings
-                fetch(file)
-                    .then(response => response.text())
-                    .then(text => {
-                        var lines = text.split('\n');
-                        lines.forEach((line, index) => {
-                            if (line.startsWith('# ')) {
-                                // This line is a heading, create a sub-link for it
-                                var subLink = document.createElement('a');
-                                subLink.href = '#';
-                                subLink.textContent = '  ' + line.substring(2); // Remove '# ' from the start of the line
-                                subLink.style.display = 'block';
-                                subLink.style.marginLeft = '20px'; // Indent the sub-link
-                                subLink.onclick = function() {
-                                    displayFile(file);
-                                    // Scroll to the heading
-                                    setTimeout(() => {
-                                        var headings = document.querySelectorAll('#content h1');
-                                        if (headings[index]) {
-                                            headings[index].scrollIntoView();
-                                        }
-                                    }, 100);
-                                    return false;
-                                };
-                                fileDiv.appendChild(subLink); // Append the sub-link to the fileDiv
-                            }
-                        });
-
-                        document.getElementById('links').appendChild(fileDiv); // Append the fileDiv to the #links div
-                    });
+                document.getElementById('links').appendChild(link); // Append the main link to the #links div
             }
 
-            // Create links for all files
-            files.forEach(createLink);
-        }
+            function startApp() {
+                // Create links for all files
+                files.forEach(createLink);
 
-        window.onload = startApp;
-    </script>
+                // Remove the .md extension from the link text
+                document.querySelectorAll('#links a').forEach(link => {
+                    link.textContent = link.textContent.replace('.md', '');
+                });
+
+                // If there's a hash in the URL, display the corresponding file
+                var file = location.hash.substring(1); // Remove the # from the hash
+                if (files.includes(file)) {
+                    displayFile(file);
+                }
+
+                // Add hashchange event listener inside startApp
+                window.addEventListener('hashchange', function() {
+                    var file = location.hash.substring(1); // Remove the # from the hash
+                    if (files.includes(file)) {
+                        displayFile(file);
+                    }
+                });
+            }
+
+            window.onload = startApp;
+        </script>
 </body>
 </html>

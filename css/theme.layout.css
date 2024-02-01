@@ -1,0 +1,100 @@
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, iframe {
+    border: none;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#taskbar {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.taskbar-section {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+#start-button-section,
+#app-buttons-section,
+#reserve-section {
+    justify-content: flex-start;
+}
+
+#icon-section,
+#time-section,
+#right-icon-section {
+    justify-content: flex-end;
+}
+
+#desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(5em + 10px), 1fr));
+    grid-gap: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    align-content: start;
+}
+
+.desktop-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.start-menu-overlay,
+.clock-overlay {
+    display: none;
+    position: fixed;
+    width: 40%;
+    height: calc(100% - 50px);
+    top: 50px;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.clock-overlay {
+    left: 30%;
+    padding: 10px;
+}
+
+.start-menu-overlay {
+    display: none;
+    position: fixed;
+    width: 40%;
+    height: calc(100% - 50px);
+    top: 50px;
+    left: 0;
+
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.start-menu-overlay .row a {
+    margin: 0 10px;
+    padding: 5px;
+    /* Add some margin around each link */
+
+}
